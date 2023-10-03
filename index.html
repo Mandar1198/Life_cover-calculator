@@ -70,7 +70,7 @@
       const netInvestment = investments[0] + loans + futureExpense + savings;
 
       const resultDiv = document.getElementById("result");
-      resultDiv.innerHTML = `Net Investment Amount: $${netInvestment.toFixed(2)}`;
+      resultDiv.innerHTML = `Net Investment Amount: ${netInvestment.toFixed(2)}`;
 
       const table = document.getElementById("table");
       table.innerHTML = "<tr><th>Age</th><th>Expense (E)</th><th>Investment (I)</th></tr>";
@@ -82,8 +82,8 @@
         const investmentCell = row.insertCell(2);
 
         ageCell.textContent = presentAge + i;
-        expenseCell.textContent = `$${expenses[i].toFixed(2)}`;
-        investmentCell.textContent = `$${investments[i].toFixed(2)}`;
+        expenseCell.textContent = `${expenses[i].toFixed(2)}`;
+        investmentCell.textContent = `${investments[i].toFixed(2)}`;
       }
     }
   </script>
