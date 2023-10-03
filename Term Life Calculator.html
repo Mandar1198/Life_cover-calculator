@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Term Life Cover Calculator</title>
+</head>
+<body>
+  <h1>Term Life Cover Calculator</h1>
+  <label for="presentAge">Present Age:</label>
+  <input type="number" id="presentAge" placeholder="Enter Present Age"><br>
+
+  <label for="protectionAge">Protection Age:</label>
+  <input type="number" id="protectionAge" placeholder="Enter Protection Age"><br>
+
+  <label for="monthlyExpense">Monthly Expense:</label>
+  <input type="number" id="monthlyExpense" placeholder="Enter Monthly Expense"><br>
+
+  <label for="yearlyExpense">Yearly Expense:</label>
+  <input type="number" id="yearlyExpense" placeholder="Enter Yearly Expense"><br>
+
+  <label for="futureExpense">Future Expense:</label>
+  <input type="number" id="futureExpense" placeholder="Enter Future Expense"><br>
+
+  <label for="loans">Loans:</label>
+  <input type="number" id="loans" placeholder="Enter Loans"><br>
+
+  <label for="savings">Savings:</label>
+  <input type="number" id="savings" placeholder="Enter Savings"><br>
+
+  <button onclick="calculateCover()">Calculate</button>
+
+  <h2>Result:</h2>
+  <div id="result"></div>
+
+  <h2>Expense vs Investment:</h2>
+  <table id="table">
+    <tr>
+      <th>Age</th>
+      <th>Expense (E)</th>
+      <th>Investment (I)</th>
+    </tr>
+  </table>
+
+  <script>
+    function calculateCover() {
+      const presentAge = parseFloat(document.getElementById("presentAge").value);
+      const protectionAge = parseFloat(document.getElementById("protectionAge").value);
+      const monthlyExpense = parseFloat(document.getElementById("monthlyExpense").value);
+      const yearlyExpense = parseFloat(document.getElementById("yearlyExpense").value);
+      const futureExpense = parseFloat(document.getElementById("futureExpense").value);
+      const loans = parseFloat(document.getElementById("loans").value);
+      const savings = parseFloat(document.getElementById("savings").value);
+
+      const expenses = [];
+      const investments = [];
+
+      let E = monthlyExpense * 12 + yearlyExpense;
+
+      for (let age = presentAge; age <= protectionAge; age++) {
+        expenses.push(E);
+        E *= 1.06;
+      }
+
+      let I = expenses[expenses.length - 1] / 1.06;
+
+      for (let i = expenses.length - 2; i >= 0; i--) {
+        investments.unshift(I);
+        I = (I + expenses[i]) / 1.06;
+      }
+
+      const netInvestment = investments[0] + loans + futureExpense + savings;
+
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = `Net Investment Amount: $${netInvestment.toFixed(2)}`;
+
+      const table = document.getElementById("table");
+      table.innerHTML = "<tr><th>Age</th><th>Expense (E)</th><th>Investment (I)</th></tr>";
+
+      for (let i = 0; i < expenses.length; i++) {
+        const row = table.insertRow(-1);
+        const ageCell = row.insertCell(0);
+        const expenseCell = row.insertCell(1);
+        const investmentCell = row.insertCell(2);
+
+        ageCell.textContent = presentAge + i;
+        expenseCell.textContent = `$${expenses[i].toFixed(2)}`;
+        investmentCell.textContent = `$${investments[i].toFixed(2)}`;
+      }
+    }
+  </script>
+</body>
+</html>
