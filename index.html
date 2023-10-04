@@ -113,6 +113,35 @@ Additionally, the results include a tabular breakdown of your family's annual ex
         expenseCell.textContent = `${expenses[i].toFixed(2)}`;
         investmentCell.textContent = `${investments[i].toFixed(2)}`;
       }
+      // Create an object with the data to send to the backend
+      const requestData = {
+        presentAge,
+        protectionAge,
+        monthlyExpense,
+        yearlyExpense,
+        futureExpense,
+        loans,
+        savings,
+        netInvestment,
+      };
+
+      // Send the data to your Xano backend
+      fetch('https://x8ki-letl-twmt.n7.xano.io/api:PPSSZdon/personal_details', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response from Xano (e.g., display a success message)
+        console.log(data);
+      })
+      .catch(error => {
+        // Handle any errors (e.g., show an error message)
+        console.error(error);
+      });
     }
   </script>
 </body>
