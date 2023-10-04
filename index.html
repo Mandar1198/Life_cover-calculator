@@ -95,7 +95,7 @@ Additionally, the results include a tabular breakdown of your family's annual ex
         I = (I + expenses[i]) / 1.06;
       }
 
-      const netInvestment = investments[0] + loans + futureExpense + savings;
+      const netInvestment = investments[0] + loans + futureExpense - savings;
 
       const resultDiv = document.getElementById("result");
       resultDiv.innerHTML = `Net Investment Amount: ${netInvestment.toFixed(2)}`;
